@@ -4,6 +4,7 @@ import logging
 from base64 import b64encode, b64decode
 
 import gssapi
+from gssapi.raw.types import RequirementFlag
 
 from requests.auth import AuthBase
 from requests.models import Response
@@ -124,11 +125,11 @@ class HTTPSPNEGOAuth(AuthBase):
 
         """
 
-        gssflags = [gssapi.RequirementFlag.out_of_sequence_detection]
+        gssflags = [RequirementFlag.out_of_sequence_detection]
         if self.delegate:
-            gssflags.append(gssapi.RequirementFlag.delegate_to_peer)
+            gssflags.append(RequirementFlag.delegate_to_peer)
         if self.mutual_authentication != DISABLED:
-            gssflags.append(gssapi.RequirementFlag.mutual_authentication)
+            gssflags.append(RequirementFlag.mutual_authentication)
 
         try:
             gss_stage = "initiating context"
